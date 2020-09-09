@@ -1,7 +1,7 @@
 <template>
   <div v-show="!loading">
     <div v-if="!error">E-mail verificado com sucesso!</div>
-    <div v-else-if="error">Erro, link expirado ou inválido!</div>
+    <div v-else>Erro, link expirado ou inválido!</div>
     <router-link to="/signin">Voltar</router-link>
   </div>
 </template>
