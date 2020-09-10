@@ -8,62 +8,69 @@ import SignUp from "./views/SignUp";
 import Forgot from "./views/Forgot";
 import Action from "./views/Action";
 import ConfirmMail from "./views/ConfirmMail";
+import Profile from "./views/Profile";
 
 Vue.use(Router);
 
 const routes = [
   {
     path: "/",
-    redirect: "/signin",
+    redirect: "/signin"
   },
   {
     path: "/home",
     name: "home",
     component: Home,
     meta: {
-      requiresAuth: true,
-    },
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: Profile,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/signin",
     name: "signin",
-    component: SignIn,
+    component: SignIn
   },
   {
     path: "/signup",
     name: "signup",
-    component: SignUp,
+    component: SignUp
   },
   {
     path: "/forgot",
     name: "forgot",
-    component: Forgot,
+    component: Forgot
   },
   {
     path: "/action",
     name: "action",
-    component: Action,
+    component: Action
   },
   {
     path: "/mail",
     name: "mail",
     component: ConfirmMail,
     meta: {
-      requiresAuth: true,
-    },
-  },
+      requiresAuth: true
+    }
+  }
 ];
 
 const router = new Router({
   mode: "history",
-  routes,
+  routes
 });
 
 router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser;
-  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-
-  console.log(currentUser);
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && currentUser) {
     if (currentUser.emailVerified && to.name === "mail") next("home");

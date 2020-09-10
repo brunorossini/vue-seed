@@ -22,6 +22,7 @@
 
 <script>
 import firebase from "firebase";
+import firebaseErrors from "../util/firebaseErrors";
 
 export default {
   data() {
@@ -32,10 +33,14 @@ export default {
   },
   methods: {
     async signin() {
-      await firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password);
-      this.$router.push("/home");
+      try {
+        await firebase
+          .auth()
+          .signInWithEmailAndPassword(this.email, this.password);
+        this.$router.push("/home");
+      } catch (error) {
+        throw firebaseErrors[error.code];
+      }
     },
   },
 };
